@@ -10,10 +10,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_12_130807) do
+ActiveRecord::Schema.define(version: 2019_09_12_153903) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "creators", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "cultural_goods", force: :cascade do |t|
+    t.string "title"
+    t.string "type"
+    t.string "thematic"
+    t.bigint "creator_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["creator_id"], name: "index_cultural_goods_on_creator_id"
+  end
+
+  create_table "memories", force: :cascade do |t|
+    t.date "date"
+    t.integer "rating"
+    t.text "review"
+    t.bigint "user_id"
+    t.bigint "cultural_good_id"
+    t.bigint "venue_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cultural_good_id"], name: "index_memories_on_cultural_good_id"
+    t.index ["user_id"], name: "index_memories_on_user_id"
+    t.index ["venue_id"], name: "index_memories_on_venue_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -27,4 +57,14 @@ ActiveRecord::Schema.define(version: 2019_09_12_130807) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "venues", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "cultural_goods", "creators"
+  add_foreign_key "memories", "cultural_goods"
+  add_foreign_key "memories", "users"
+  add_foreign_key "memories", "venues"
 end
