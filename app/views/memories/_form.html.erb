@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-xs-12 col-sm-6 mt-4">
+      <%= simple_form_for(memory) do |f| %>
+      <%= f.simple_fields_for :cultural_goods do |cultural_goods_form| %>
+          <%= cultural_goods_form.input :title %>
+          <%= f.simple_fields_for :creators do |creators_form| %>
+              <%= creators_form.input :name %>
+          <% end %>
+          <%= cultural_goods_form.input :type, collection: ["Exhibition", "Cinema", "Book", "Comic", "Stand-up", "Theatre", "Opera", "Dancing", "Concert", "TV Show", "Documentary"], include_blank: false %>
+          <%= cultural_goods_form.input :thematic %>
+          <%= cultural_goods_form.input :email %>
+      <% end %>
+      <%= f.input :date, as: :date, html5: true %>
+      <%= f.input :rating, collection: ["1", "2", "3", "4", "5"], include_blank: false %>
+      <%= f.input :review, as: :text %>
+      <button class="btn button"><% f.button :submit%>Record a Memory</button>
+      <% end %>
+    </div>
+  </div>
+</div>
