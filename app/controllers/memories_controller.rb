@@ -19,8 +19,6 @@ class MemoriesController < ApplicationController
 		if @memory.save
 		  redirect_to root_path
 		else
-		  puts "-------------"
-		  puts @memory.errors.to_h
 		  render :home
 		end
 	end
@@ -29,9 +27,13 @@ class MemoriesController < ApplicationController
 	end
 
 	def update
+		@memory.update(memories_params)
+		redirect_to root_path, notice: "Your memory has been updated !"
 	end
 
-	def delete
+	def destroy
+		@memory.destroy
+		redirect_to root_path, notice: "Your memory has been deleted !"
 	end
 
 	private
@@ -42,6 +44,6 @@ class MemoriesController < ApplicationController
 	end
 
 	def memories_params
-	  params.require(:memory).permit(:date, :rating, :review, :venue_id, venue_attributes: [:name, :id], cultural_good_attributes: [:title, :cultural_type, :thematic, creator_attributes: [:name]])
+	  params.require(:memory).permit(:date, :rating, :review, venue_attributes: [:name], cultural_good_attributes: [:title, :cultural_type, :thematic, creator_attributes: [:name]])
 	end
 end
