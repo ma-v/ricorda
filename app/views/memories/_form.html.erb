@@ -4,6 +4,8 @@
       <%= simple_form_for(memory) do |f| %>
       <%= f.simple_fields_for :cultural_good do |cultural_good_form| %>
           <%= cultural_good_form.input :title %>
+          <ul class="suggestions">
+          </ul>
           <%= cultural_good_form.simple_fields_for :creator do |creator_form| %>
               <%= creator_form.input :name %>
           <% end %>
