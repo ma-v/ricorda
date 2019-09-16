@@ -1,1 +1,16 @@
+<ul>
+	<% @memories.each do |memory| %>
+		<li>
+			<h2><%= memory.cultural_good.title %></h2> 
+			<h3><%= memory.cultural_good.creator.name %></h3> 
+			<p>Location : <%= memory.venue.name %></p> 
+			<p>Rating : 
+				<% memory.rating.times do %>
+					<i class="fas fa-star"></i>
+				<% end %>
+			</p> 
+		</li>
+	<% end %>
+</ul>
+
 <%= render 'form', memory: @memory %>

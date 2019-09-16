@@ -2,8 +2,9 @@ class MemoriesController < ApplicationController
 	before_action :set_memory, only: [:show, :edit, :update, :destroy]
 
 	def home
-		@memories = Memory.all
-		@memory = Memory.new
+		@memories = policy_scope(Memory)
+		@memory = current_user.memories.new
+		authorize @memory
 		cultural_good = @memory.build_cultural_good
 		cultural_good.build_creator
 		@memory.build_venue
@@ -12,13 +13,9 @@ class MemoriesController < ApplicationController
 	def show
 	end
 
-	# def new
-	# 	@memory = Memory.new
-	# end
-
 	def create
-		@memory = Memory.new(memories_params)
-		@memory.user = current_user
+		@memory = current_user.memories.new(memories_params)
+		authorize @memory
 		if @memory.save
 		  redirect_to root_path
 		else
@@ -41,6 +38,7 @@ class MemoriesController < ApplicationController
 
 	def set_memory
 		@memory = Memory.find(params[:id])
+		authorize @memory
 	end
 
 	def memories_params
