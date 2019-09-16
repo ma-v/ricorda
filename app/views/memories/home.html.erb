@@ -1,6 +1,6 @@
 <ul>
 	<% @memories.each do |memory| %>
-		<li>
+		<li class=<%= "#{memory.cultural_good.cultural_type.downcase}-card" %>>
 			<h2><%= memory.cultural_good.title %></h2> 
 			<h3><%= memory.cultural_good.creator.name %></h3> 
 			<p>Location : <%= memory.venue.name %></p> 
@@ -8,7 +8,8 @@
 				<% memory.rating.times do %>
 					<i class="fas fa-star"></i>
 				<% end %>
-			</p> 
+			</p>
+			<p>"<%= memory.review %>"</p> 
 		</li>
 	<% end %>
 </ul>
