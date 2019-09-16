@@ -10,6 +10,8 @@
 				<% end %>
 			</p>
 			<p>"<%= memory.review %>"</p> 
+			<%= link_to "Change your memory", edit_memory_path(memory) %>
+			<%= link_to "Delete your memory", memory_path(memory), data: { confirm: 'Are you sure?' }, method: :delete %>
 		</li>
 	<% end %>
 </ul>
