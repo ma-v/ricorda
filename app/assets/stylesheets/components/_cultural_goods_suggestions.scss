@@ -2,6 +2,10 @@
   margin: 0;
   padding: 0;
   position: relative;
+  :hover {
+    background: blue;
+    color: white;
+  }
   /*perspective: 20px;*/
 }
 
