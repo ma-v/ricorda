@@ -12,22 +12,25 @@ const suggestCulturalGoods = () => {
 	}
 
 	function displayCulturalGoods(data) {
-	  	const moviesArray = []
-		  	data.results.forEach(result => moviesArray.push(result.original_title))
-		  	const html = moviesArray.map(movie => {
-			    return `
-			      <li class="movie">
-			        <span>${movie}</span>
-			      </li>
-			    `;
-		  	}).join('');
-		  	suggestions.innerHTML = html;
+	  	const titlesArray = [];
+	  	const creatorsArray = [];
+		data.results.forEach(result => {
+			titlesArray.push(result.original_title);
+		});
+		const html = titlesArray.map(title => {
+		    return `
+		      <li class="cultural-good-title">
+		        <span>${title}</span>
+		      </li>
+		    `;
+	  	}).join('');
+		suggestions.innerHTML = html;
 
 		function selectCulturalGood() {
-			const movies = document.querySelectorAll(".movie");
-			if (movies) {
-				movies.forEach(movie => {
-					movie.addEventListener("click", e => {
+			const culturalGoodTitles = document.querySelectorAll(".cultural-good-title");
+			if (culturalGoodTitles) {
+				culturalGoodTitles.forEach(title => {
+					title.addEventListener("click", e => {
 					titleInput.value = e.currentTarget.innerText;
 					suggestions.innerHTML = "";
 					});
