@@ -1,23 +1,30 @@
-<div class="cards">
-	<% @memories.each do |memory| %>
-		<div class=<%= "card-trip #{memory.cultural_good.cultural_type.downcase}-card" %>>
-			<div class="card-trip-infos">
-			    <div>
-					<h3><%= memory.cultural_good.title %></h3> 
-					<h2><%= memory.cultural_good.creator.name %></h2> 
-					<p>Location : <%= memory.venue.name %></p> 
-					<p>Rating : 
-						<% memory.rating.times do %>
-							<i class="fas fa-star"></i>
-						<% end %>
-					</p>
-					<p>"<%= memory.review %>"</p> 
-					<%= link_to "Change your memory", edit_memory_path(memory) %>
-					<%= link_to "Delete your memory", memory_path(memory), data: { confirm: 'Are you sure?' }, method: :delete %>
+<div class=d-flex>
+	<div class="memory-index">
+		<h1>Your <br> Memories</h1>
+		<div class="cards">
+			<% @memories.each do |memory| %>
+				<div class=<%= "card #{memory.cultural_good.cultural_type.downcase}-card" %>>
+					<div class="card-infos">
+					    <div> 
+						<h2><%= memory.cultural_good.title %></h2>
+							<h4><%= memory.cultural_good.creator.name %></h4> 
+							<p>Venue : <%= memory.venue.name %></p> 
+							<p>Rating : 
+								<% memory.rating.times do %>
+									<i class="fas fa-star"></i>
+								<% end %>
+							</p>
+							<p>"<%= memory.review %>"</p> 
+							<%= link_to "Change your memory", edit_memory_path(memory) %>
+							<%= link_to "Delete your memory", memory_path(memory), data: { confirm: 'Are you sure?' }, method: :delete %>
+						</div>
+					</div>
 				</div>
-			</div>
+			<% end %>
 		</div>
-	<% end %>
+	</div>
+	<div class="new-memory-form">
+		<h1>Record a memory</h1>
+		<%= render 'form', memory: @memory %>	
+	</div>
 </div>
-
-<%= render 'form', memory: @memory %>

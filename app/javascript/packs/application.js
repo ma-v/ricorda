@@ -1,5 +1,5 @@
 import "bootstrap";
 import "isomorphic-fetch";
-import { suggestMovies } from '../actions/input-form';
+import { suggestCulturalGoods } from '../actions/input-form';
 
-suggestMovies();
+suggestCulturalGoods();
