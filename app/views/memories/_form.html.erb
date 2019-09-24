@@ -3,6 +3,7 @@
   <%= f.simple_fields_for :cultural_good do |cultural_good_form| %>
     <%= cultural_good_form.input :cultural_type, collection: ["Book", "Cinema", "Comic", "Concert", "Dancing", "Documentary", "Exhibition", "Opera", "Stand-up", "Theatre", "TV Show"], include_blank: false %>
     <%= cultural_good_form.input :title, input_html: { autocomplete: 'off' } %>
+    <%= cultural_good_form.input :movie_db_id, as: :hidden %>
     <ul class="suggestions">
     </ul>
     <%= cultural_good_form.simple_fields_for :creator do |creator_form| %>

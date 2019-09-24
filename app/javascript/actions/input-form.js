@@ -41,6 +41,7 @@ const suggestCulturalGoods = () => {
 
 	const typeInput = document.querySelector("#memory_cultural_good_attributes_cultural_type");
 	const titleInput = document.querySelector("#memory_cultural_good_attributes_title");
+	const mdbIdInput = document.querySelector("#memory_cultural_good_attributes_movie_db_id");
 	const suggestions = document.querySelector('.suggestions');
 
 	if (titleInput) {
