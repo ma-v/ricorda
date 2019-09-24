@@ -5,31 +5,30 @@ const suggestCulturalGoods = () => {
 	    if (event.value) {
 		    fetch(url)
 		      .then(blob => blob.json())
-		      .then(data => displayCulturalGoods(data));
+		      .then(data => displayMovies(data));
 	    } else {
 	    	suggestions.innerHTML = "";
 	    }
 	}
 
-	function displayCulturalGoods(data) {
-	  	const titlesArray = [];
-	  	const creatorsArray = [];
+	function displayMovies(data) {
+	  	const movies = [];
 		data.results.forEach(result => {
-			titlesArray.push(result.original_title);
+			movies.push({title: result.original_title, id: result.id});
 		});
-		const html = titlesArray.map(title => {
+		const html = movies.map(movie => {
 		    return `
-		      <li class="cultural-good-title">
-		        <span>${title}</span>
+		      <li class="movie-title" data-id="${movie.id}">
+		        <span>${movie.title}</span>
 		      </li>
 		    `;
 	  	}).join('');
 		suggestions.innerHTML = html;
 
-		function selectCulturalGood() {
-			const culturalGoodTitles = document.querySelectorAll(".cultural-good-title");
-			if (culturalGoodTitles) {
-				culturalGoodTitles.forEach(title => {
+		function selectMovie() {
+			const movieTitles = document.querySelectorAll(".movie-title");
+			if (movieTitles) {
+				movieTitles.forEach(title => {
 					title.addEventListener("click", e => {
 					titleInput.value = e.currentTarget.innerText;
 					suggestions.innerHTML = "";
@@ -37,7 +36,7 @@ const suggestCulturalGoods = () => {
 				});
 			}
 		}
-		selectCulturalGood();
+		selectMovie();
 	}
 
 	const typeInput = document.querySelector("#memory_cultural_good_attributes_cultural_type");
