@@ -31,17 +31,29 @@ const suggestCulturalGoods = () => {
 				movieTitles.forEach(title => {
 					title.addEventListener("click", e => {
 					titleInput.value = e.currentTarget.dataset.title;
+					mdbIdInput.value = e.currentTarget.dataset.id;
 					suggestions.innerHTML = "";
+					findDirector(e.currentTarget.dataset.id);
 					});
 				});
 			}
 		}
 		selectMovie();
+
+		function findDirector(id) {
+			const url = `https://api.themoviedb.org/3/movie/${id}/credits?api_key=263e31d1ad0c4defa8822787e614e716`
+			fetch(url)
+		      .then(blob => blob.json())
+		      .then(data => {
+		      	creatorInput.value = (data.crew.find(movie => movie.department === "Directing").name);
+		  	})
+		}
 	}
 
 	const typeInput = document.querySelector("#memory_cultural_good_attributes_cultural_type");
 	const titleInput = document.querySelector("#memory_cultural_good_attributes_title");
 	const mdbIdInput = document.querySelector("#memory_cultural_good_attributes_movie_db_id");
+	const creatorInput = document.querySelector("#memory_cultural_good_attributes_creator_attributes_name");
 	const suggestions = document.querySelector('.suggestions');
 
 	if (titleInput) {
