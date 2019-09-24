@@ -14,12 +14,12 @@ const suggestCulturalGoods = () => {
 	function displayMovies(data) {
 	  	const movies = [];
 		data.results.forEach(result => {
-			movies.push({title: result.original_title, id: result.id});
+			movies.push({title: result.original_title, id: result.id, year: result.release_date.slice(0,4)});
 		});
 		const html = movies.map(movie => {
 		    return `
-		      <li class="movie-title" data-id="${movie.id}">
-		        <span>${movie.title}</span>
+		      <li class="movie-title" data-id="${movie.id}" data-title="${movie.title}">
+		        <span>${movie.title} - ${movie.year}</span>
 		      </li>
 		    `;
 	  	}).join('');
@@ -30,7 +30,7 @@ const suggestCulturalGoods = () => {
 			if (movieTitles) {
 				movieTitles.forEach(title => {
 					title.addEventListener("click", e => {
-					titleInput.value = e.currentTarget.innerText;
+					titleInput.value = e.currentTarget.dataset.title;
 					suggestions.innerHTML = "";
 					});
 				});
