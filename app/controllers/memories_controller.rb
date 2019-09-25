@@ -44,6 +44,6 @@ class MemoriesController < ApplicationController
 	end
 
 	def memories_params
-	  params.require(:memory).permit(:date, :rating, :review, venue_attributes: [:name], cultural_good_attributes: [:title, :cultural_type, :thematic, creator_attributes: [:name]])
+	  params.require(:memory).permit(:date, :rating, :review, venue_attributes: [:name], cultural_good_attributes: [:title, :cultural_type, :thematic, :movie_db_id, creator_attributes: [:name]])
 	end
 end

@@ -4,11 +4,15 @@ class CulturalGood < ApplicationRecord
   belongs_to :creator
   has_many :memories
   accepts_nested_attributes_for :creator
-  before_save :find_or_create_creator
 
-  private
-
-  def find_or_create_creator
-    self.creator = Creator.find_or_create_by(name: creator.name)
+  def creator_attributes=(attrs)
+    self.creator = Creator.where(attrs).first_or_initialize(attrs)
   end
+  # before_save :find_or_initialize_creator
+
+  # private
+
+  # def find_or_initialize_creator
+  #   self.creator = Creator.find_or_initialize_by(name: creator.name)
+  # end
 end
