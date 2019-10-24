@@ -33,8 +33,12 @@ const suggestCulturalGoods = () => {
 					titleInput.value = e.currentTarget.dataset.title;
 					mdbIdInput.value = e.currentTarget.dataset.id;
 					suggestions.innerHTML = "";
+					creatorInput.removeAttribute("disabled");
+					thematicInput.removeAttribute("disabled");
 					findDirector(e.currentTarget.dataset.id);
 					findThematics(e.currentTarget.dataset.genre);
+					creatorInput.setAttribute("disabled", true);
+					thematicInput.setAttribute("disabled", true);
 					});
 				});
 			}
@@ -60,12 +64,28 @@ const suggestCulturalGoods = () => {
 		}
 	}
 
+	const switchCulturalType = () => {
+		if (thematicInput.getAttribute("disabled") === "true") {
+			thematicInput.removeAttribute("disabled");
+		}
+		if (creatorInput.getAttribute("disabled") == "true") {
+			creatorInput.removeAttribute("disabled");
+		}
+		titleInput.value = "";
+		creatorInput.value = "";
+		thematicInput.value = "";
+	}
+
 	const typeInput = document.querySelector("#memory_cultural_good_attributes_cultural_type");
 	const titleInput = document.querySelector("#memory_cultural_good_attributes_title");
 	const mdbIdInput = document.querySelector("#memory_cultural_good_attributes_movie_db_id");
 	const creatorInput = document.querySelector("#memory_cultural_good_attributes_creator_attributes_name");
 	const thematicInput = document.querySelector("#memory_cultural_good_attributes_thematic");
 	const suggestions = document.querySelector('.suggestions');
+
+	if (typeInput) {
+		typeInput.addEventListener("change", switchCulturalType)
+	}
 
 	if (titleInput) {
 		titleInput.addEventListener("keyup", function() {
