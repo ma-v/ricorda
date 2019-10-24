@@ -33,8 +33,12 @@ const suggestCulturalGoods = () => {
 					titleInput.value = e.currentTarget.dataset.title;
 					mdbIdInput.value = e.currentTarget.dataset.id;
 					suggestions.innerHTML = "";
+					creatorInput.removeAttribute("disabled");
+					thematicInput.removeAttribute("disabled");
 					findDirector(e.currentTarget.dataset.id);
 					findThematics(e.currentTarget.dataset.genre);
+					creatorInput.setAttribute("disabled", true);
+					thematicInput.setAttribute("disabled", true);
 					});
 				});
 			}
