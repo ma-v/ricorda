@@ -1,5 +1,12 @@
 <div class="justify-content-center">
   <%= simple_form_for(memory) do |f| %>
+  <% if flash[:memory_errors] %>
+    <ul>
+    <% flash[:memory_errors].each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  <% end %>
   <%= f.simple_fields_for :cultural_good do |cultural_good_form| %>
     <%= cultural_good_form.input :cultural_type, collection: ["Book", "Cinema", "Comic", "Concert", "Dancing", "Documentary", "Exhibition", "Opera", "Stand-up", "Theatre", "TV Show"], include_blank: false %>
     <%= cultural_good_form.input :title, input_html: { autocomplete: 'off' } %>
