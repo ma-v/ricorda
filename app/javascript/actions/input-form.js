@@ -14,11 +14,11 @@ const suggestCulturalGoods = () => {
 	function displayMovies(data) {
 	  	const movies = [];
 		data.results.forEach(result => {
-			movies.push({title: result.original_title, id: result.id, year: result.release_date.slice(0,4)});
+			movies.push({title: result.original_title, id: result.id, genre_id: result.genre_ids[0], year: result.release_date.slice(0,4)});
 		});
 		const html = movies.map(movie => {
 		    return `
-		      <li class="movie-title" data-id="${movie.id}" data-title="${movie.title}">
+		      <li class="movie-title" data-id="${movie.id}" data-title="${movie.title}" data-genre="${movie.genre_id}">
 		        <span>${movie.title} - ${movie.year}</span>
 		      </li>
 		    `;
@@ -34,6 +34,7 @@ const suggestCulturalGoods = () => {
 					mdbIdInput.value = e.currentTarget.dataset.id;
 					suggestions.innerHTML = "";
 					findDirector(e.currentTarget.dataset.id);
+					findThematics(e.currentTarget.dataset.genre[0])
 					});
 				});
 			}
@@ -48,6 +49,17 @@ const suggestCulturalGoods = () => {
 		      	creatorInput.value = (data.crew.find(movie => movie.department === "Directing").name);
 		  	})
 		}
+
+		function findThematics(id) {
+			const url = "https://api.themoviedb.org/3/genre/movie/list?api_key=263e31d1ad0c4defa8822787e614e716&language=fr-FR";
+			fetch(url)
+				.then(blob => blob.json())
+				.then(data => {
+					data.find(genre => {
+						genre.id == id
+					})
+				})
+		}
 	}
 
 	const typeInput = document.querySelector("#memory_cultural_good_attributes_cultural_type");
@@ -59,7 +71,7 @@ const suggestCulturalGoods = () => {
 	if (titleInput) {
 		titleInput.addEventListener("keyup", function() {
 			if (typeInput.value == "Cinema") { findMovies(this) };
-		})	 
+		})
 	}
 }
 
