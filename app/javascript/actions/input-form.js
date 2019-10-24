@@ -34,7 +34,7 @@ const suggestCulturalGoods = () => {
 					mdbIdInput.value = e.currentTarget.dataset.id;
 					suggestions.innerHTML = "";
 					findDirector(e.currentTarget.dataset.id);
-					findThematics(e.currentTarget.dataset.genre[0])
+					findThematics(e.currentTarget.dataset.genre);
 					});
 				});
 			}
@@ -53,12 +53,10 @@ const suggestCulturalGoods = () => {
 		function findThematics(id) {
 			const url = "https://api.themoviedb.org/3/genre/movie/list?api_key=263e31d1ad0c4defa8822787e614e716&language=fr-FR";
 			fetch(url)
-				.then(blob => blob.json())
-				.then(data => {
-					data.find(genre => {
-						genre.id == id
+					.then(blob => blob.json())
+					.then(data => {
+						thematicInput.value = (data.genres.find(genre => genre.id === parseInt(id)).name);
 					})
-				})
 		}
 	}
 
@@ -66,6 +64,7 @@ const suggestCulturalGoods = () => {
 	const titleInput = document.querySelector("#memory_cultural_good_attributes_title");
 	const mdbIdInput = document.querySelector("#memory_cultural_good_attributes_movie_db_id");
 	const creatorInput = document.querySelector("#memory_cultural_good_attributes_creator_attributes_name");
+	const thematicInput = document.querySelector("#memory_cultural_good_attributes_thematic");
 	const suggestions = document.querySelector('.suggestions');
 
 	if (titleInput) {
