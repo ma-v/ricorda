@@ -4,17 +4,17 @@
 	background-color: $dark;
 	padding: 30px;
 	position: sticky;
-	color: white;
+	color: $gray;
 	h1 {
-		color: $pink;
+		color: $gray;
 	}
-	border-left: 0.5px solid white;
+	border-left: 0.5px solid $gray;
 }
 
 .memory-index {
 	flex: 6;
 	margin: 30px;
 	h1 {
-		color: $pink;
+		color: $gray;
 	}
 }

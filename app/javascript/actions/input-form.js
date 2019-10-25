@@ -216,7 +216,7 @@ const suggestCulturalGoods = () => {
 		titleInput.addEventListener("keyup", function() {
 			if (typeInput.value == "Cinema") { findMovies(this) };
 			if (typeInput.value == "TV Show") { findTvShows(this) };
-			if (typeInput.value == "Book") { findBooks(this) };
+			if (typeInput.value == "Book" || typeInput.value == "Comic") { findBooks(this) };
 		})
 	}
 }
