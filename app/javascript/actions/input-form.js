@@ -135,6 +135,32 @@ const suggestCulturalGoods = () => {
 		}
 	}
 
+	//BOOKS
+	function findBooks(event) {
+	    const url = `https://www.googleapis.com/books/v1/volumes?q=${event.value}`;
+	    if (event.value) {
+		    fetch(url)
+		      .then(blob => blob.json())
+		      .then(data => console.log(dat);//displayTvShows(data));
+	    } else {
+	    	suggestions.innerHTML = "";
+	    }
+	}
+
+		function displayBooks(data) {
+	  	const books = [];
+			data.results.forEach(result => {
+				books.push({name: result.original_name, id: result.id, genre_id: result.genre_ids[0], year: result.first_air_date.slice(0,4)});
+			});
+		const html = tvShows.map(show => {
+		    return `
+		      <li class="show-name" data-id="${show.id}" data-name="${show.name}" data-genre="${show.genre_id}">
+		        <span>${show.name} - ${show.year}</span>
+		      </li>
+		    `;
+	  	}).join('');
+		suggestions.innerHTML = html;
+
 	const switchCulturalType = () => {
 		if (thematicInput.getAttribute("disabled") === "true") {
 			thematicInput.removeAttribute("disabled");
