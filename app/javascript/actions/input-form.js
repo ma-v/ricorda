@@ -80,17 +80,17 @@ const suggestCulturalGoods = () => {
 
 		function displayTvShows(data) {
 	  	const tvShows = [];
-		data.results.forEach(result => {
-			tvShows.push({name: result.original_name, id: result.id, genre_id: result.genre_ids[0], year: result.first_air_date.slice(0,4)});
-		});
-		const html = tvShows.map(show => {
+			data.results.forEach(result => {
+				tvShows.push({name: result.original_name, id: result.id, genre_id: result.genre_ids[0], year: result.first_air_date.slice(0,4)});
+			});
+			const html = tvShows.map(show => {
 		    return `
 		      <li class="show-name" data-id="${show.id}" data-name="${show.name}" data-genre="${show.genre_id}">
 		        <span>${show.name} - ${show.year}</span>
 		      </li>
 		    `;
 	  	}).join('');
-		suggestions.innerHTML = html;
+			suggestions.innerHTML = html;
 
 		function selectTvShow() {
 			const showName = document.querySelectorAll(".show-name");
@@ -137,29 +137,55 @@ const suggestCulturalGoods = () => {
 
 	//BOOKS
 	function findBooks(event) {
-	    const url = `https://www.googleapis.com/books/v1/volumes?q=${event.value}`;
+	    const url = `https://www.googleapis.com/books/v1/volumes?q=${event.value}&orderBy=relevance`;
 	    if (event.value) {
 		    fetch(url)
-		      .then(blob => blob.json())
-		      .then(data => console.log(dat);//displayTvShows(data));
+		      .then(response => response.json())
+		      .then(data => displayBooks(data));
 	    } else {
 	    	suggestions.innerHTML = "";
 	    }
 	}
 
-		function displayBooks(data) {
+	function displayBooks(data) {
 	  	const books = [];
-			data.results.forEach(result => {
-				books.push({name: result.original_name, id: result.id, genre_id: result.genre_ids[0], year: result.first_air_date.slice(0,4)});
+			data.items.forEach(item => {
+				books.push({
+					title: item.volumeInfo.title,
+					author: (item.volumeInfo.authors ? item.volumeInfo.authors[0] : "Unknown Author"),
+					id: item.id,
+					category: (item.volumeInfo.categories ? item.volumeInfo.categories[0] : "No Category"),
+					year: item.volumeInfo.publishedDate.slice(0,4)
+				});
 			});
-		const html = tvShows.map(show => {
+			const html = books.map(book => {
 		    return `
-		      <li class="show-name" data-id="${show.id}" data-name="${show.name}" data-genre="${show.genre_id}">
-		        <span>${show.name} - ${show.year}</span>
+		      <li class="book-title" data-id="${book.id}" data-title="${book.title}" data-category="${book.category}" data-author="${book.author}">
+		        <span>${book.title} - ${book.author} -${book.year}</span>
 		      </li>
 		    `;
 	  	}).join('');
 		suggestions.innerHTML = html;
+
+		function selectBook() {
+			const bookTitle = document.querySelectorAll(".book-title");
+			if (bookTitle) {
+				bookTitle.forEach(title => {
+					title.addEventListener("click", e => {
+					titleInput.value = e.currentTarget.dataset.title;
+					suggestions.innerHTML = "";
+					creatorInput.removeAttribute("disabled");
+					thematicInput.removeAttribute("disabled");
+					creatorInput.value = e.currentTarget.dataset.author;
+					thematicInput.value = e.currentTarget.dataset.category;
+					creatorInput.setAttribute("disabled", true);
+					thematicInput.setAttribute("disabled", true);
+					});
+				});
+			}
+		}
+		selectBook();
+	}
 
 	const switchCulturalType = () => {
 		if (thematicInput.getAttribute("disabled") === "true") {
@@ -188,6 +214,7 @@ const suggestCulturalGoods = () => {
 		titleInput.addEventListener("keyup", function() {
 			if (typeInput.value == "Cinema") { findMovies(this) };
 			if (typeInput.value == "TV Show") { findTvShows(this) };
+			if (typeInput.value == "Book") { findBooks(this) };
 		})
 	}
 }
