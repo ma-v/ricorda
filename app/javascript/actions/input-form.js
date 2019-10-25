@@ -137,7 +137,7 @@ const suggestCulturalGoods = () => {
 
 	//BOOKS
 	function findBooks(event) {
-	    const url = `https://www.googleapis.com/books/v1/volumes?q=${event.value}&orderBy=relevance`;
+	    const url = `https://www.googleapis.com/books/v1/volumes?q=${event.value}&orderBy=relevance&key=AIzaSyBBKHdU9INgusBmLu9IYhNu7f6YcNW7MT8`;
 	    if (event.value) {
 		    fetch(url)
 		      .then(response => response.json())
@@ -149,15 +149,17 @@ const suggestCulturalGoods = () => {
 
 	function displayBooks(data) {
 	  	const books = [];
-			data.items.forEach(item => {
-				books.push({
-					title: item.volumeInfo.title,
-					author: (item.volumeInfo.authors ? item.volumeInfo.authors[0] : "Unknown Author"),
-					id: item.id,
-					category: (item.volumeInfo.categories ? item.volumeInfo.categories[0] : "No Category"),
-					year: item.volumeInfo.publishedDate.slice(0,4)
+			if (data.items) {
+				data.items.forEach(item => {
+					books.push({
+						title: item.volumeInfo.title,
+						author: (item.volumeInfo.authors ? item.volumeInfo.authors[0] : "Unknown Author"),
+						id: item.id,
+						category: (item.volumeInfo.categories ? item.volumeInfo.categories[0] : "No Category"),
+						year: (item.volumeInfo.publishedDate? item.volumeInfo.publishedDate.slice(0,4) : "Unknown")
+					});
 				});
-			});
+			}
 			const html = books.map(book => {
 		    return `
 		      <li class="book-title" data-id="${book.id}" data-title="${book.title}" data-category="${book.category}" data-author="${book.author}">
