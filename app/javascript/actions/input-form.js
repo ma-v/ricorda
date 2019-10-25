@@ -2,7 +2,7 @@ const suggestCulturalGoods = () => {
 
 	//CINEMA
 	function findMovies(event) {
-	    const url = `https://api.themoviedb.org/3/search/movie?api_key=263e31d1ad0c4defa8822787e614e716&language=en-US&query=${event.value}&page=1&include_adult=false`;
+	    const url = `https://api.themoviedb.org/3/search/movie?api_key=${tmdbKey}&language=en-US&query=${event.value}&page=1&include_adult=false`;
 	    if (event.value) {
 		    fetch(url)
 		      .then(blob => blob.json())
@@ -47,7 +47,7 @@ const suggestCulturalGoods = () => {
 		selectMovie();
 
 		function findMovieDirector(id) {
-			const url = `https://api.themoviedb.org/3/movie/${id}/credits?api_key=263e31d1ad0c4defa8822787e614e716`
+			const url = `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${tmdbKey}`
 			fetch(url)
 		      .then(blob => blob.json())
 		      .then(data => {
@@ -56,7 +56,7 @@ const suggestCulturalGoods = () => {
 		}
 
 		function findMovieThematics(id) {
-			const url = "https://api.themoviedb.org/3/genre/movie/list?api_key=263e31d1ad0c4defa8822787e614e716&language=fr-FR";
+			const url = `https://api.themoviedb.org/3/genre/movie/list?api_key=${tmdbKey}&language=fr-FR`;
 			fetch(url)
 					.then(blob => blob.json())
 					.then(data => {
@@ -68,7 +68,7 @@ const suggestCulturalGoods = () => {
 
 	//TV SHOWS
 	function findTvShows(event) {
-	    const url = `https://api.themoviedb.org/3/search/tv?api_key=263e31d1ad0c4defa8822787e614e716&language=en-US&query=${event.value}&page=1&include_adult=false`;
+	    const url = `https://api.themoviedb.org/3/search/tv?api_key=${tmdbKey}&language=en-US&query=${event.value}&page=1&include_adult=false`;
 	    if (event.value) {
 		    fetch(url)
 		      .then(blob => blob.json())
@@ -113,7 +113,7 @@ const suggestCulturalGoods = () => {
 		selectTvShow();
 
 		function findTvShowDirector(id) {
-			const url = `https://api.themoviedb.org/3/tv/${id}/season/1/credits?api_key=263e31d1ad0c4defa8822787e614e716`
+			const url = `https://api.themoviedb.org/3/tv/${id}/season/1/credits?api_key=${tmdbKey}`
 			fetch(url)
 		      .then(blob => blob.json())
 		      .then(data => {
@@ -126,7 +126,7 @@ const suggestCulturalGoods = () => {
 		}
 
 		function findTvShowThematics(id) {
-			const url = "https://api.themoviedb.org/3/genre/tv/list?api_key=263e31d1ad0c4defa8822787e614e716&language=fr-FR";
+			const url = `https://api.themoviedb.org/3/genre/tv/list?api_key=${tmdbKey}&language=fr-FR`;
 			fetch(url)
 					.then(blob => blob.json())
 					.then(data => {
@@ -137,7 +137,7 @@ const suggestCulturalGoods = () => {
 
 	//BOOKS
 	function findBooks(event) {
-	    const url = `https://www.googleapis.com/books/v1/volumes?q=${event.value}&orderBy=relevance&key=AIzaSyBBKHdU9INgusBmLu9IYhNu7f6YcNW7MT8`;
+	    const url = `https://www.googleapis.com/books/v1/volumes?q=${event.value}&orderBy=relevance&`;
 	    if (event.value) {
 		    fetch(url)
 		      .then(response => response.json())
@@ -206,6 +206,7 @@ const suggestCulturalGoods = () => {
 	const mdbIdInput = document.querySelector("#memory_cultural_good_attributes_movie_db_id");
 	const creatorInput = document.querySelector("#memory_cultural_good_attributes_creator_attributes_name");
 	const thematicInput = document.querySelector("#memory_cultural_good_attributes_thematic");
+	const tmdbKey = ENV["TMDB_KEY"];
 	const suggestions = document.querySelector('.suggestions');
 
 	if (typeInput) {
