@@ -206,7 +206,7 @@ const suggestCulturalGoods = () => {
 	const mdbIdInput = document.querySelector("#memory_cultural_good_attributes_movie_db_id");
 	const creatorInput = document.querySelector("#memory_cultural_good_attributes_creator_attributes_name");
 	const thematicInput = document.querySelector("#memory_cultural_good_attributes_thematic");
-	const tmdbKey = ENV["TMDB_KEY"];
+	const tmdbKey = "263e31d1ad0c4defa8822787e614e716";
 	const suggestions = document.querySelector('.suggestions');
 
 	if (typeInput) {
